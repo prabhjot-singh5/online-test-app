@@ -4,8 +4,8 @@ import Results from "./components/Results";
 
 function App() {
   const [name, setName] = useState("");
-  const [rollNumber, setRollNumber] = useState("");
-  const [course, setCourse] = useState("");
+  const [age, setAge] = useState("");
+  const [country, setCountry] = useState("");
 
   const [testStarted, setTestStarted] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -73,15 +73,15 @@ function App() {
     setScore(calculatedScore);
     setSubmitting(true);
 
-    fetch("http://localhost:5000/submit", {
+    fetch("https://online-test-app-sez4.onrender.com/submit", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         name,
-        rollNo: rollNumber,
-        course,
+        age,
+        country,
         score: calculatedScore,
       }),
     })
@@ -265,7 +265,7 @@ function App() {
             onClick={handleTitleClick}
             className="text-3xl font-bold text-center text-zinc-800 mb-8 cursor-pointer select-none"
           >
-            Student Details
+            Contestant Details
           </h1>
 
           {/* Name */}
@@ -286,37 +286,37 @@ function App() {
           {/* Roll No */}
           <div className="relative mb-7">
             <input
-              value={rollNumber}
-              onChange={(e) => setRollNumber(e.target.value)}
-              type="text"
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
+              type="number"
               placeholder=" "
               className="peer w-full bg-transparent border-b-2 border-zinc-300 py-3 outline-none focus:border-blue-500"
             />
 
             <label className="absolute left-0 -top-3 text-xs text-zinc-500 transition-all duration-200 pointer-events-none peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-focus:-top-3 peer-focus:text-xs peer-focus:text-blue-500">
-              Enter Roll No
+              Enter Age
             </label>
           </div>
 
           {/* Course */}
           <div className="relative mb-10">
             <input
-              value={course}
-              onChange={(e) => setCourse(e.target.value)}
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
               type="text"
               placeholder=" "
               className="peer w-full bg-transparent border-b-2 border-zinc-300 py-3 outline-none focus:border-blue-500"
             />
 
             <label className="absolute left-0 -top-3 text-xs text-zinc-500 transition-all duration-200 pointer-events-none peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-focus:-top-3 peer-focus:text-xs peer-focus:text-blue-500">
-              Enter Course
+              Country (Optional)
             </label>
           </div>
 
           <button
             onClick={() => {
-              if (!name || !rollNumber || !course) {
-                alert("Please fill all fields");
+              if (!name || !age) {
+                alert("Please enter your name and age");
                 return;
               }
 

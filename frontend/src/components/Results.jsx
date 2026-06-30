@@ -7,7 +7,7 @@ function Results({ onBack }) {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch("http://localhost:5000/results")
+        fetch("https://online-test-app-sez4.onrender.com/results")
             .then((res) => res.json())
             .then((data) => {
                 setStudents(data);
@@ -21,8 +21,8 @@ function Results({ onBack }) {
 
     const filteredStudents = students.filter(
         (student) =>
-            student.name.toLowerCase().includes(search.toLowerCase()) ||
-            student.rollNo.toLowerCase().includes(search.toLowerCase())
+            student.name?.toLowerCase().includes(search.toLowerCase()) ||
+            String(student.age || "").includes(search)
     );
 
     return (
@@ -50,7 +50,7 @@ function Results({ onBack }) {
                 <div className="grid gap-4 mb-6">
                     <div className="bg-white rounded-2xl shadow-lg p-5 border border-zinc-100">
                         <p className="text-zinc-500 text-sm">
-                            Total Students
+                            Total Contestants
                         </p>
 
                         <h2 className="text-3xl font-bold text-zinc-800 mt-1">
@@ -65,7 +65,7 @@ function Results({ onBack }) {
                         type="text"
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
-                        placeholder="Search by name or roll number..."
+                        placeholder="Search by name or age..."
                         className="w-full p-3 border-b-2 border-zinc-300 outline-none focus:border-blue-500 bg-transparent"
                     />
 
@@ -98,11 +98,11 @@ function Results({ onBack }) {
                                         </th>
 
                                         <th className="text-left p-4 font-semibold text-zinc-700">
-                                            Roll No
+                                            Age
                                         </th>
 
                                         <th className="text-left p-4 font-semibold text-zinc-700">
-                                            Course
+                                            Country
                                         </th>
 
                                         <th className="text-left p-4 font-semibold text-zinc-700">
@@ -122,16 +122,17 @@ function Results({ onBack }) {
                                             <td className="p-4 font-bold text-zinc-800">
                                                 #{index + 1}
                                             </td>
+
                                             <td className="p-4 font-medium text-zinc-800">
                                                 {student.name}
                                             </td>
 
                                             <td className="p-4 text-zinc-600">
-                                                {student.rollNo}
+                                                {student.age || "-"}
                                             </td>
 
                                             <td className="p-4 text-zinc-600">
-                                                {student.course}
+                                                {student.country || "-"}
                                             </td>
 
                                             <td className="p-4">
@@ -164,4 +165,3 @@ function Results({ onBack }) {
 }
 
 export default Results;
-
