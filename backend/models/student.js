@@ -2,19 +2,29 @@ const mongoose = require("mongoose");
 
 const studentSchema = new mongoose.Schema(
   {
-    name: String,
-    rollNo: {
+    name: {
       type: String,
-      unique: true,
+      required: true,
     },
-    course: String,
-    score: Number,
+
+    age: {
+      type: Number,
+      required: true,
+    },
+
+    country: {
+      type: String,
+      default: "",
+    },
+
+    score: {
+      type: Number,
+      required: true,
+    },
   },
   {
     timestamps: true,
   }
 );
-
-
 
 module.exports = mongoose.model("Student", studentSchema);
